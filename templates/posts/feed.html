@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}All Posts{% endblock %}
+
+{% block content %}
+
+    {% if latest_posts %}
+
+        {% for post in latest_posts %}
+            <a href="{% url 'posts:post' post.id %}">{{ post.title }}</a><br>
+            Author: {{ post.user.username }}<br>
+        {% endfor %}
+
+    {% else %}
+
+        There are no posts ...
+    
+    {% endif %}
+
+    <a href="{% url 'posts:add_post' %}">Add a new post:</a>
+
+{% endblock %}
