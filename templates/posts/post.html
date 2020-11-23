@@ -1,0 +1,45 @@
+{% extends  'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+
+    {% if post %}
+
+        <p>{{ post.post }}</p>
+        <p>Author: {{ post.user.username }}</p>
+        <em>{{ post.date }}</em>
+
+        <br>
+        {% if  comments %}
+            
+            {% for comment in  comments%}
+                <p>
+                    {{ comment.comment_text }}:
+                    {{ comment.user.username }}
+                </p>
+            {% endfor %}
+
+        {% else %}
+            There are no comments ... 
+        {% endif %}
+            
+
+        <form action="{% url 'posts:add_comment' post.id %}" method="POST">
+
+            {% csrf_token %}
+
+            <textarea name="text" required placeholder="Comment text" cols="30" rows="10"></textarea><br>
+
+            <button name="submit">Send</button>
+
+        </form>
+
+    {% else %}
+
+        Post not found =(
+    
+    {% endif %}
+    <br><a href="{% url 'posts:index' %}">Back</a>
+
+{% endblock %}
